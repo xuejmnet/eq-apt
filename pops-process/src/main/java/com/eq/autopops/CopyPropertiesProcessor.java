@@ -48,7 +48,7 @@ public class CopyPropertiesProcessor {
             String value = values[i];
             if(MyStrUtil.isNotBlank(value)){
                 if(value.contains(",")){
-                    collections.addAll(Arrays.asList(MyStrUtil.splitAndRemoveEmptyElements(value,",")));
+                    collections.addAll(MyStrUtil.splitAndRemoveEmptyElements(value,","));
                 }else{
                     collections.add(value);
                 }

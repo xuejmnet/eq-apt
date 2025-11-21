@@ -1,5 +1,7 @@
 package com.eq.autopops;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -31,9 +33,15 @@ public class MyStrUtil {
     }
 
 
-    public static String[] splitAndRemoveEmptyElements(String input, String delimiter) {
-        return Stream.of(input.split(delimiter))
-                .filter(element -> !element.isEmpty()) // 过滤掉空元素
-                .toArray(String[]::new);
+    public static List<String> splitAndRemoveEmptyElements(String input, String delimiter) {
+        String[] inputArray = input.split(delimiter);
+        List<String> result = new ArrayList<>(inputArray.length);
+        for (int i = 0; i < inputArray.length; i++) {
+            String item = inputArray[i];
+            if(isNotBlank(item)){
+                result.add(item);
+            }
+        }
+        return result;
     }
 }

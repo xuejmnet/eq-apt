@@ -12,9 +12,12 @@ public class EntityTypeProp {
 
     public final JCTree.JCVariableDecl jcVariableDecl;
     public final String name;
+    public final boolean hasCopyIgnore;
 
-    public EntityTypeProp(JCTree.JCVariableDecl jcVariableDecl){
+    public EntityTypeProp(JCTree.JCVariableDecl jcVariableDecl, boolean hasCopyIgnore){
         this.jcVariableDecl = jcVariableDecl;
         this.name = jcVariableDecl.name.toString();
+        this.hasCopyIgnore = hasCopyIgnore;
     }
 }
+

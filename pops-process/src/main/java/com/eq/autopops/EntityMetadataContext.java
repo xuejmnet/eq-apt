@@ -117,11 +117,9 @@ public class EntityMetadataContext {
                 if (navigate != null) {
                     continue;
                 }
-                CopyIgnore copyIgnore = fieldElement.getAnnotation(CopyIgnore.class);
-                if (copyIgnore != null) {
-                    continue;
-                }
 
+                CopyIgnore copyIgnore = fieldElement.getAnnotation(CopyIgnore.class);
+                boolean hasCopyIgnore = copyIgnore != null;
 
 //
 //                com.sun.tools.javac.util.List<JCTree.JCAnnotation> annotations = treeMaker.Annotations(compounds);
@@ -139,7 +137,7 @@ public class EntityMetadataContext {
                 com.sun.tools.javac.util.List<JCTree.JCAnnotation> annotations = treeMaker.Annotations(com.sun.tools.javac.util.List.from(propAnnotations));
                 JCTree.JCExpression type = treeMaker.Type(((Symbol.VarSymbol) fieldElement).type);
                 JCTree.JCVariableDecl jcVariableDecl = treeMaker.VarDef(treeMaker.Modifiers(Flags.PRIVATE, annotations), names.fromString(propertyName), type, null);
-                appendProp(entityTypeMetadata, jcVariableDecl);
+                appendProp(entityTypeMetadata, jcVariableDecl,hasCopyIgnore);
 //                JCTree tree = javacTrees.getTree(fieldElement);
 //                if (tree instanceof JCTree.JCVariableDecl) {
 //                    JCTree.JCVariableDecl jcVariableDecl = (JCTree.JCVariableDecl) tree;
@@ -154,8 +152,8 @@ public class EntityMetadataContext {
         }
     }
 
-    private void appendProp(EntityTypeMetadata entityTypeMetadata, JCTree.JCVariableDecl jcVariableDecl) {
-        EntityTypeProp entityTypeProp = new EntityTypeProp(jcVariableDecl);
+    private void appendProp(EntityTypeMetadata entityTypeMetadata, JCTree.JCVariableDecl jcVariableDecl,boolean hasCopyIgnore) {
+        EntityTypeProp entityTypeProp = new EntityTypeProp(jcVariableDecl,hasCopyIgnore);
         entityTypeMetadata.getTypeProps().add(entityTypeProp);
         JCTree.JCExpression vartype = jcVariableDecl.vartype;
         Type type = vartype.type;
